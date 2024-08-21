@@ -1,0 +1,35 @@
+comutatividade da adição nos números naturais no assistente de prova Coq
+Inductive N : Type :=
+| O : N
+| S : N -> N
+.
+
+Fixpoint plus (x y : N) :N :=
+match x with
+| O => y
+| S x' => S (plus x' y)
+end.
+
+Lemma plus_O (x : N) : plus x O = x.
+
+Proof.
+  induction x.
+  - simpl. reflexivity.
+  - simpl. rewrite IHx. reflexivity.
+ Qed.
+ 
+Lemma plus_S (x y : N) : plus x (S y) = S (plus x y).
+
+Proof.
+  induction x.
+  - simpl. reflexivity.
+  - simpl. rewrite IHx. reflexivity.
+ Qed.
+
+Lemma plus_com (x y : N) : plus x y = plus y x.
+
+Proof.
+  induction x.
+  - simpl. rewrite plus_O. reflexivity.
+  - simpl. rewrite IHx.  rewrite plus_S. reflexivity.
+  Qed.
